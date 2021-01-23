@@ -16,7 +16,6 @@ BOOL WINAPI DllMain(HINSTANCE hInst, DWORD reason, LPVOID)
 		
 		strcat_s(path, "\\System32\\wsock32.dll");
 		hL = LoadLibrary(path);
-		//hL = LoadLibrary(".\\wsock32_.dll");
 		MessageBox(NULL, ("BETA serverbrowser patch was succesfully loaded"), ("ofpisnotdead.com"), NULL);
 		if (!hL) return false;
 

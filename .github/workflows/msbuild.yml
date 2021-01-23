@@ -1,0 +1,49 @@
+name: MSBuild
+
+on: [push]
+
+env:
+  # Path to the solution file relative to the root of the project.
+  SOLUTION_FILE_PATH: .
+
+
+jobs:
+  debug-build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1
+
+    - name: Build
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      # Add additional options to the MSBuild command line here (like platform or verbosity level).
+      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
+      run: msbuild /m /p:Configuration=Debug ${{env.SOLUTION_FILE_PATH}}
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: debug-dll
+        path: D:\a\wsock32-ofp\wsock32-ofp\Debug\wsock32.dll
+
+  release-build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1
+
+    - name: Build
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      # Add additional options to the MSBuild command line here (like platform or verbosity level).
+      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
+      run: msbuild /m /p:Configuration=Release ${{env.SOLUTION_FILE_PATH}}
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: release-dll
+        path: D:\a\wsock32-ofp\wsock32-ofp\Release\wsock32.dll
